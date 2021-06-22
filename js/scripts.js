@@ -1,10 +1,10 @@
 //wrapping pokemonList array in an IIFE
 let pokemonRepository = (function() {
   //creating the Pokemon database
-  let pokemonList = [{
-    {name: "Bulbasaur", height: 7, type: "grass"},
-    {name: "Ivysaur", height: 10, type: "monster"},
-    {name: "Pikachu", height: 4, type: "fairy"}
+  let pokemonList = [
+    {name: "Bulbasaur", height: 7, types: ["grass"]},
+    {name: "Ivysaur", height: 10, types: ["monster"]},
+    {name: "Pikachu", height: 4, types: ["fairy"]}
   ];
 
   function add(pokemon) {
@@ -27,11 +27,10 @@ let pokemonRepository = (function() {
   console.log(pokemonRepository.getAll());
 
 
-pokemonRepository.getAll().forEach(function(item)) {
+pokemonRepository.getAll().forEach(function(item) {
   if (item.height > 5) {
     document.write(item.name + " is " + item.height + " m high" + " - Wow, that's big!" + "<br>");
       } else {
         document.write(item.name + " is " + item.height + " m high!" + "<br>");
       }
-  }
-  
+  } )
