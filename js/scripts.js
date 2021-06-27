@@ -8,29 +8,55 @@ let pokemonRepository = (function() {
   ];
 
   function add(pokemon) {
+  if (
+    typeof pokemon === "object" &&
+    "name" in pokemon &&
+    "height" in pokemon &&
+    "types" in pokemon
+  ) {
     pokemonList.push(pokemon);
+  } else {
+    console.log("pokemon is not correct");
   }
+}
 
   function getAll() {
     return pokemonList;
   }
+  function addListItem(pokemon) {
+    let fullList = document.querySelector(".pokemon-list");
+    let listpokemon = document.createElement("li");
+    let button = document.createElement("button");
+    button.innerText = pokemon.name;
+    button.classList.add("button-class");
+    listpokemon.appendChild(button);
+    fullList.appendChild(listpokemon);
+    button.addEventListener("click", function (event) {
+        showDetails(pokemon);
+    });
+  }
+
+  function showDetails(pokemon){
+    console.log(pokemon.name);
+  }
+
   return {
     add: add,
-    getAll: getAll
+    getAll: getAll,
+    addListItem: addListItem,
+    showDetails: showDetails,
   };
 })();
+
   pokemonRepository.add({
-    name: 'Balbasaur',
+    name: "Balbasaur",
     height: 5.7,
-    type: ['grass', 'poison']
+    type: ["grass", "poison"]
   });
   console.log(pokemonRepository.getAll());
 
 
 pokemonRepository.getAll().forEach(function(item) {
-  if (item.height > 5) {
-    document.write(item.name + " is " + item.height + " m high" + " - Wow, that's big!" + "<br>");
-      } else {
-        document.write(item.name + " is " + item.height + " m high!" + "<br>");
-      }
-  } )
+  pokemonRepository.addListItem(pokemon);
+
+  });
