@@ -57,6 +57,6 @@ let pokemonRepository = (function() {
 
 
 pokemonRepository.getAll().forEach(function(item) {
-  pokemonRepository.addListItem(pokemon);
+  pokemonRepository.addListItem(item);
 
   });
