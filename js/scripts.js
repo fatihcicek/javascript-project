@@ -1,28 +1,23 @@
 //wrapping pokemonList array in an IIFE
 let pokemonRepository = (function() {
-  //creating the Pokemon database
-  let pokemonList = [
-    {name: "Bulbasaur", height: 7, types: ["grass"]},
-    {name: "Ivysaur", height: 10, types: ["monster"]},
-    {name: "Pikachu", height: 4, types: ["fairy"]}
-  ];
+    let pokemonList = [];
+  	let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
-  function add(pokemon) {
-  if (
-    typeof pokemon === "object" &&
-    "name" in pokemon &&
-    "height" in pokemon &&
-    "types" in pokemon
-  ) {
-    pokemonList.push(pokemon);
-  } else {
-    console.log("pokemon is not correct");
-  }
-}
+function add(pokemon) {
+      if (
+          typeof pokemon === "object" &&
+          "name" in pokemon
+          ){
+          pokemonList.push(pokemon);
+        } else{
+          console.log('pokemon is not correct');
+        }
+      }
 
   function getAll() {
     return pokemonList;
   }
+  
   function addListItem(pokemon) {
     let fullList = document.querySelector(".pokemon-list");
     let listpokemon = document.createElement("li");
@@ -36,27 +31,58 @@ let pokemonRepository = (function() {
     });
   }
 
+  function loadList() {
+  	return fetch(apiUrl).then(function (response) {
+  		return response.json();
+  	}).then(function(json) {
+  		json.results.forEach(function(item) {
+  			let pokemon = {
+  				name: item.name,
+  				detailsUrl: item.url
+  			};
+  			add(pokemon);
+  		});
+  	}).catch(function (e) {
+  		console.error(e);
+  	})
+  }
+
+
+  function loadDetails(item) {
+  	let url = item.detailsUrl;
+  	return fetch(url).then(function (response){
+  		return response.json();
+  	}).then(function (details) {
+  		// below code adds the details to the item
+  		item.imageUrl = details.sprites.front_detault;
+  		item.height = details.height;
+  		item.types = details.types;
+  	}).catch(function (e) {
+  		console.error(e);
+  	});
+  }
+
+
   function showDetails(pokemon){
-    console.log(pokemon.name);
+    loadDetails(pokemon).then(function () {
+		console.log(pokemon);
+	});
   }
 
   return {
     add: add,
     getAll: getAll,
     addListItem: addListItem,
+    loadList: loadList,
+    loadDetails: loadDetails,
     showDetails: showDetails,
   };
 })();
 
-  pokemonRepository.add({
-    name: "Balbasaur",
-    height: 5.7,
-    type: ["grass", "poison"]
-  });
-  console.log(pokemonRepository.getAll());
 
-
-pokemonRepository.getAll().forEach(function(item) {
-  pokemonRepository.addListItem(item);
-
-  });
+pokemonRepository.loadList().then(function() {
+  	//^^ now the data is loaded
+  	pokemonRepository.getAll().forEach(function(pokemon){
+  		pokemonRepository.addListItem(pokemon);
+  	});
+  })
