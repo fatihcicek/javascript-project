@@ -22,6 +22,7 @@ function add(pokemon) {
   function addListItem(pokemon) {
     let fullList = document.querySelector(".pokemon-list");
     let listpokemon = document.createElement("li");
+    fullList.appendChild(listpokemon);
     let button = document.createElement("button");
     button.innerText = pokemon.name;
     button.classList.add("button-class");
@@ -54,7 +55,7 @@ function add(pokemon) {
   		return response.json();
   	}).then(function (details) {
   		// below code adds the details to the item
-  		item.imageUrl = details.sprites.front_detault;
+  		item.imageUrl = details.sprites.front_default;
   		item.height = details.height;
   		item.types = details.types;
   	}).catch(function (e) {
