@@ -57,7 +57,11 @@ function add(pokemon) {
   		// below code adds the details to the item
   		item.imageUrl = details.sprites.front_default;
   		item.height = details.height;
-  		item.types = details.types;
+      // calls the types array
+			item.types = [];
+			for ( let i = 0; i < details.types.length; i++) {
+				item.types.push(details.types[i].type.name);
+			}
   	}).catch(function (e) {
   		console.error(e);
   	});
@@ -79,17 +83,28 @@ function add(pokemon) {
   		closeButtonElement.addEventListener('click', hideModal);
 
   		// creates title <h1> element
-  		let titleElement = document.createElement('h1');
-  		titleElement.innerText = 'loadDetails';
+
+      let nameElement = document.createElement('h1');
+		  nameElement.innerText = pokemon.name;
+
+
+      let imageElement = document.createElement('img');
+    	// imageElement.innerHTML = pokemon.imageUrl;
+      imageElement.src = pokemon.imageUrl;
 
   		// creates <p> element
-  		let contentElement = document.createElement('p');
-  		contentElement.innerText = 'text';
+      let typeElement = document.createElement('p');
+		  typeElement.innerText = pokemon.types;
 
+      // creates <p> element for height
+    	let heightElement = document.createElement('p');
+      heightElement.innerText = pokemon.height;
 
   		modal.appendChild(closeButtonElement);
-  		modal.appendChild(titleElement);
-  		modal.appendChild(contentElement);
+      modal.appendChild(nameElement);
+      modal.appendChild(imageElement);
+		  modal.appendChild(typeElement);
+      modal.appendChild(heightElement);
   		modalContainer.appendChild(modal);
 
   		modalContainer.classList.add('is-visible');
