@@ -5,10 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Simple JS App</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="css/java.css">
+    <link rel="stylesheet" type="text/css" href="dist/java.css">
   </head>
   <body>
+    <header class="page-header">
+        <img src="img/Pokédex_logo.png" class="pokedex-logo" alt="logo">
+        <br>
 
+        <nav class="navbar">
+          <form class="search-bar" role="search">
+            <input type="text" id="search-bar" class="form-control" placeholder="Search">
+          </form>
+        </nav>
+
+       </header>
     <main class="page-body">
       <!-- Modal button -->
       <ul class = "list-group"></ul>
@@ -34,7 +44,7 @@
             </div>
             </div>
           </div>
-      
+
     </main>
 
       <!-- Bootstrap.js tags -->
@@ -47,6 +57,6 @@
        <!-- Polyfill tags -->
     <script src="js/jpromise-polyfill.js"></script>
     <script src="js/fetch-polyfill.js"></script>
-    <script src="js/scripts.js"></script>
+    <script src="dist/scripts.js"></script>
   </body>
 </html>

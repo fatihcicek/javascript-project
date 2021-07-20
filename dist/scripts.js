@@ -38,7 +38,7 @@ function add(pokemon) {
    	  button.setAttribute('data-target', '#exampleModal');
    	  button.setAttribute('data-toggle', 'modal');
     listpokemon.appendChild(button);
-    listpokemon.appendChild(listItem);
+    pokemonList.appendChild(listpokemon);
     button.addEventListener('click', function (event) {
         showDetails(pokemon);
     });
@@ -78,7 +78,24 @@ function add(pokemon) {
   		console.error(e);
   	});
   }
+  // Searchbar:
 
+	function search() {
+		let searchInput = document.querySelector('#search-bar');
+
+    		searchInput.addEventListener('input', function() {
+
+    			let displayedList = document.querySelector('.list-group');
+    			displayedList.innerHTML = '';
+    			let searchText = searchInput.value.trim();
+
+    			pokemonList.forEach(function(pokemon) {
+    				if (pokemon.name.includes(searchText.toLowerCase())) {
+    					addListItem(pokemon)
+    				}
+    			});
+  		});
+  }
   // displays modal
   	function showModal(pokemon) {
 
@@ -152,6 +169,7 @@ function add(pokemon) {
     loadList: loadList,
     loadDetails: loadDetails,
     showDetails: showDetails,
+    search: search
   };
 })();
 
@@ -162,3 +180,5 @@ pokemonRepository.loadList().then(function() {
   		pokemonRepository.addListItem(pokemon);
   	});
   });
+
+pokemonRepository.search();
